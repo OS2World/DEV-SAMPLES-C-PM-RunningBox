@@ -1,0 +1,14 @@
+RUN for OS/2 Presentation Manager
+
+From an OS/2 Command prompt, type      START RUN
+
+Creates a moving window that runs from the mouse.  If you can catch it,
+click on the system box and close it.  Otherwise, use Ctrl+Esc, select
+the program on the Task Manager, and then use Alt-SPC to open its
+system menu.  If you start it with the /h option (IN LOWERCASE!), it's
+harder to stop because it won't appear on the Task Manager.  The only
+way to get rid of it is to catch it.
+
+Alan Bishop
+agb@ecsvax.uncecs.edu
+CIS: 72405, 647

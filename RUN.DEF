@@ -1,0 +1,7 @@
+NAME		RUN	WINDOWAPI
+
+DESCRIPTION	'Obnoxious Window by Alan Bishop (agb@ecsvax.uncecs.edu)'
+PROTMODE
+HEAPSIZE	4096
+STACKSIZE	8192
+EXPORTS		ClientWndProc
