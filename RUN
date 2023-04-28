@@ -1,5 +1,0 @@
-run.obj : run.c
-	cl -c -AL -G2sw -W3 run.c
-
-run.exe : run.obj run.def
-	cl -AL -G2sw -W3 run.obj -link os2,run

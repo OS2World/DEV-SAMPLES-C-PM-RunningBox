@@ -1,14 +1,61 @@
-RUN for OS/2 Presentation Manager
+Name: 		RUN
+Descripcion: 	PM Moving window sample
+Date: 		2023-04-27
+Version:	1.01
+----------------------------   
+
+
+
+DESCRIPTION
+-----------
+Creates a moving window that runs from the mouse.  If you can catch it, click on the system box and close it.  Otherwise, use Ctrl+Esc, select the program on the Task Manager, and then use Alt-SPC to open its system menu.  If you start it with the /h option (IN LOWERCASE!), it's harder to stop because it won't appear on the Task Manager. The only way to get rid of it is to catch it.
 
 From an OS/2 Command prompt, type      START RUN
 
-Creates a moving window that runs from the mouse.  If you can catch it,
-click on the system box and close it.  Otherwise, use Ctrl+Esc, select
-the program on the Task Manager, and then use Alt-SPC to open its
-system menu.  If you start it with the /h option (IN LOWERCASE!), it's
-harder to stop because it won't appear on the Task Manager.  The only
-way to get rid of it is to catch it.
 
-Alan Bishop
-agb@ecsvax.uncecs.edu
-CIS: 72405, 647
+REQUIREMENTS
+------------
+- yum install git gcc make libc-devel binutils watcom-wrc watcom-wlink-hll
+
+COMPILE INSTRUCTIONS
+--------------------
+This version of this sample was modified to compile on ArcaOS with GCC 9 compiler. 
+
+1) Remember to have correct header files your path. For GCC the correct ones are the included on the "libc-devel", not the ones from the OS/2 Toolkit. Check your config.sys for "SET INCLUDE=C:\usr\include"
+
+2) Since I'm using the Watcom Resource Compiler (open source) instead of the classic rc.exe, add to your config.sys...
+ SET EMXOMFLD_LINKER=wl.exe
+ SET EMXOMFLD_TYPE=WLINK
+
+3) Run "nmake" or "nmake 2>&1 |tee make.out" to get the log file.
+
+
+
+TOOLS USED
+----------
+- ArcaOS	- Verion 5.0.7
+- gcc		- gcc (GCC) 9.2.0 20190812 (OS/2 RPM build 9.2.0-5.oc00)
+- wlink		- Watcom linker
+- make 		- Version 3.81 k2 (2017-11-10)
+
+TROUBLESHOOT
+------------
+The compile produce will run by just executing make on the directory, but a compile.cmd file is includes to store the log in a file. If you want to save the log file you can run it as "nmake 2>&1 |tee make.out". The log will be saved into the "make.out" file.
+
+HISTORY
+---------- 
+- 1.01 - 2023-04-27
+Changed version to compile on gcc and to run on ArcaOS 5.0.7.
+
+- 1.0
+Original version by Alan Bishop
+
+LICENSE
+-------
+The 3-Clause BSD License.
+
+AUTHORS
+-------
+- Martin Iturbide (2023)
+- Dave Yeo (2023)
+- Alan Bishop (agb@ecsvax.uncecs.edu) 

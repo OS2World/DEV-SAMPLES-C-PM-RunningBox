@@ -34,27 +34,27 @@ main(int argc, char *argv[])
 
 /* Turn on hard option */
 	if (argc == 2 && !strcmp(argv[1], "/h")) flFrameFlags &= ~FCF_TASKLIST;
-	
+
 	hab = WinInitialize(0);
 	hmq = WinCreateMsgQueue(hab, 0);
 
-	WinRegisterClass(hab, szClientClass, ClientWndProc, 0L, 0);
+	WinRegisterClass(hab, (PCSZ) szClientClass, (PFNWP) ClientWndProc, 0L, 0);
 
 	hwndFrame = WinCreateStdWindow(HWND_DESKTOP, 0L,
-		&flFrameFlags, szClientClass, NULL, 0L, NULL, 0, &hwndClient);
+		&flFrameFlags, (PCSZ) szClientClass, NULL, 0L, 0, 0, &hwndClient);
 
-	WinSetWindowPos(hwndFrame, NULL, 100, 100, 50, 50,
+	WinSetWindowPos(hwndFrame, 0, 100, 100, 50, 50,
 		SWP_MOVE | SWP_SIZE | SWP_SHOW);
-		
-	WinSendMsg(hwndFrame, WM_SETICON, WinQuerySysPointer(HWND_DESKTOP,
+
+	WinSendMsg(hwndFrame, WM_SETICON, (MPARAM) WinQuerySysPointer(HWND_DESKTOP,
 		SPTR_APPICON, FALSE), NULL);
 
 	WinStartTimer(hab, hwndFrame, ID_TIMER, 200);
 
-/* Figure out how big the desktop is */		
+/* Figure out how big the desktop is */
 	WinQueryWindowPos(HWND_DESKTOP, &frame);
 
-	while (WinGetMsg(hab, &qmsg, NULL, 0, 0)) {
+	while (WinGetMsg(hab, &qmsg, 0, 0, 0)) {
 
 		WinDispatchMsg(hab, &qmsg);
 
@@ -77,10 +77,10 @@ ClientWndProc(HWND hwnd, USHORT msg, MPARAM mp1, MPARAM mp2)
 
 /* Just keep the screen clear */
 		case WM_PAINT :
-			hps = WinBeginPaint(hwnd, NULL, NULL);
+			hps = WinBeginPaint(hwnd, 0, NULL);
 
 			GpiErase(hps);
-			
+
 			WinEndPaint(hps);
 			return(0);
 
@@ -97,7 +97,7 @@ move_window()
 	SWP ipos;
 	POINTL mpos;
 	static double rdx = 0.0, rdy = 0.0;
-	
+
 	WinQueryPointerPos(HWND_DESKTOP, &mpos);
 	WinQueryWindowPos(hwndFrame, &ipos);
 
@@ -122,7 +122,7 @@ move_window()
 /* Calculate the push from: the four corners, the four points of the
  * edge of the screen where horizontal and vertical lines meet,
  * and the mouse
- */	
+ */
 	calculate_push(0           , 0           , ipos.x, ipos.y, &rdx, &rdy, 1);
 	calculate_push(0           , frame.cy    , ipos.x, ipos.y, &rdx, &rdy, 1);
 	calculate_push(frame.cx    , 0           , ipos.x, ipos.y, &rdx, &rdy, 1);
@@ -136,7 +136,7 @@ move_window()
 	ipos.x += (int) rdx;
 	ipos.y += (int) rdy;
 
-	WinSetWindowPos(hwndFrame, NULL, ipos.x, ipos.y, 0, 0,
+	WinSetWindowPos(hwndFrame, 0, ipos.x, ipos.y, 0, 0,
 		SWP_MOVE);
 }
 
@@ -152,7 +152,7 @@ calculate_push(int x1, int y1, int x2, int y2, double *cx, double *cy, int mult)
 
 	dx = (double) (x1 - x2);
 	dy = (double) (y1 - y2);
-	
+
 	dist = dx*dx + dy*dy;
 
 	if (dist == 0.0) dist = 0.0001;
